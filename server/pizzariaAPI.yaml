@@ -1,0 +1,93 @@
+openapi: 3.0.0
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/052486_1/Teste/1.0.0
+info:
+  version: "1.0.0"
+  title: PizzariaAPI
+  description: An API for an online pizza delivery business.
+paths:
+  /pizzas:
+    get:
+      tags:
+        - Pizzas
+      description: Returns all registered pizzas
+      operationId: getPizzas
+      parameters:
+        - in: query
+          name: price
+          description: Price of a pizza
+          schema:
+            type: number
+            format: double
+        - in: query
+          name: limit
+          description: Maximum number of records to return
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: All the pizzas
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pizzas"
+    # deve ser uma rota interna apenas, nao sei se deveria constar no yml, mas coloquei pois achei interessante inserir na db
+    post:
+      tags:
+        - Pizza
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pizza"
+      responses:
+        "201":
+          description: Successfully registered pizza
+        "400":
+          description: Name or price missing
+        "500":
+          description: Error writing pizza info in database
+
+components:
+  schemas:
+    Pizzas:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            description: The name of the pizza (flavor)
+          price:
+            type: number
+            format: double
+            description: The price of the pizza
+          image:
+            type: string
+            description: The URL of the pizza's image
+          description:
+            type: string
+            description: A short description of the pizza
+
+    Pizza:
+      type: object
+      required:
+        - name
+        - price
+      properties:
+        name:
+          type: string
+          description: The name of the pizza (flavor)
+        price:
+          type: number
+          format: double
+          description: The price of the pizza
+        image:
+          type: string
+          description: The URL of the pizza's image
+        description:
+          type: string
+          description: A short description of the pizza
