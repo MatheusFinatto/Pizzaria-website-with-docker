@@ -19,26 +19,5 @@
     "price": 32.99,
     "image": "https://www.allrecipes.com/thmb/v1Xi2wtebK1sZwSJitdV4MGKl1c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/hawaiian-pizza-ddmfs-3x2-132-450eff04ad924d9a9eae98ca44e3f988.jpg",
     "description": "This pizza has a sweet and savory combination of flavors, featuring pineapple and ham as its toppings. "
-  },
-  {
-    "id": "4",
-    "name": "Teste",
-    "price": 39,
-    "image": "",
-    "description": "Missing price"
-  },
-  {
-    "id": "5",
-    "name": "Teste2",
-    "price": 39,
-    "image": "",
-    "description": "Missing price"
-  },
-  {
-    "id": "6",
-    "name": "Teste2",
-    "price": 39,
-    "image": "",
-    "description": "Missing price"
   }
 ]
