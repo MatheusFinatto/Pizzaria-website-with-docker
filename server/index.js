@@ -1,28 +1,50 @@
-const db = require("./db.json");
+const mysql = require("mysql2");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const fs = require("fs");
+
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
 
+const connection = mysql.createConnection({
+  host: "db",
+  user: "root",
+  password: "root",
+  database: "pizzaria",
+  port: 3306,
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error("Error connecting to database:", err);
+  } else {
+    console.log("Connected to database");
+  }
+});
+
 app.get("/pizzas", (req, res) => {
   const { price, limit } = req.query;
-  let filteredPizzas = db;
+
+  let sql = "SELECT * FROM pizzas";
 
   if (price) {
-    filteredPizzas = filteredPizzas.filter(
-      (pizza) => pizza.price === Number(price)
-    );
+    sql += ` WHERE price = ${Number(price)}`;
   }
 
   if (limit) {
-    filteredPizzas = filteredPizzas.slice(0, Number(limit));
+    sql += ` LIMIT ${Number(limit)}`;
   }
 
-  res.send(filteredPizzas);
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error retrieving pizzas");
+    } else {
+      res.send(results);
+    }
+  });
 });
 
 app.post("/pizzas", (req, res) => {
@@ -31,20 +53,17 @@ app.post("/pizzas", (req, res) => {
   if (!pizzaReq.name || !pizzaReq.price) {
     res.status(400).send("Name or price missing");
   } else {
-    const pizza = {};
-    pizza.id = (db.length + 1).toString();
-    pizza.name = pizzaReq.name;
-    pizza.price = pizzaReq.price;
-    pizza.image = pizzaReq.image || "";
-    pizza.description = pizzaReq.description || "";
+    const pizza = {
+      name: pizzaReq.name,
+      price: pizzaReq.price,
+      image: pizzaReq.image || "",
+      description: pizzaReq.description || "",
+    };
 
-    db.push(pizza);
-
-    // Write the updated data to the db.json file
-    fs.writeFile("./db.json", JSON.stringify(db), (err) => {
+    connection.query("INSERT INTO pizzas SET ?", pizza, (err, result) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Error writing to database");
+        res.status(500).send("Error inserting pizza");
       } else {
         res.status(200).send("Pizza registered successfully");
       }
@@ -52,6 +71,20 @@ app.post("/pizzas", (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+const server = app.listen(3000, () => {
+  console.log("Server is running on port 3000!");
+});
+
+process.on("SIGINT", () => {
+  console.log("Stopping server...");
+  connection.end((err) => {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    server.close(() => {
+      console.log("Server stopped");
+      process.exit(0);
+    });
+  });
 });

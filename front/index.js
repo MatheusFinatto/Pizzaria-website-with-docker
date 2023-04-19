@@ -31,7 +31,7 @@ xhr.onload = () => {
       image.alt = pizza.name;
       title.textContent = pizza.name;
       description.textContent = pizza.description;
-      price.textContent = `R$ ${pizza.price.toFixed(2)}`;
+      price.textContent = `R$ ${pizza.price}`;
 
       // add classes to the elements
       card.classList.add("card");

@@ -1,8 +1,10 @@
 version: '3'
 
 services:
+
   front:
     build: ./front
+    container_name: front
     ports:
       - "8080:80"
     volumes:
@@ -11,7 +13,29 @@ services:
 
   server:
     build: ./server
+    container_name: server
     ports:
       - "9001:3000"
     volumes:
       - ./db.json:/app/server/db.json
+    depends_on:
+          db:
+            condition: service_healthy
+
+      
+  db:
+      image: mysql
+      container_name: db
+      environment:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: mydb
+          MYSQL_USER: user
+          MYSQL_PASSWORD: pass
+      ports:
+        - 3306:3306
+      volumes:
+        - ./db:/var/lib/mysql
+      healthcheck:
+          test: ["CMD", "mysqladmin", "--silent", "ping", "-h", "localhost"]
+          interval: 1s
+          retries: 5
