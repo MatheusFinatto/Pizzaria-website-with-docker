@@ -37,5 +37,5 @@ services:
         - ./db:/var/lib/mysql
       healthcheck:
           test: ["CMD", "mysqladmin", "--silent", "ping", "-h", "localhost"]
-          interval: 1s
+          interval: 10s
           retries: 5
