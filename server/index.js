@@ -1,4 +1,4 @@
-const db = require("../db.json");
+const db = require("./db.json");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -41,7 +41,7 @@ app.post("/pizzas", (req, res) => {
     db.push(pizza);
 
     // Write the updated data to the db.json file
-    fs.writeFile("../db.json", JSON.stringify(db), (err) => {
+    fs.writeFile("./db.json", JSON.stringify(db), (err) => {
       if (err) {
         console.error(err);
         res.status(500).send("Error writing to database");
