@@ -1,6 +1,6 @@
 const main = document.querySelector("main");
 const xhr = new XMLHttpRequest();
-xhr.open("GET", "http://localhost:3000/pizzas");
+xhr.open("GET", "http://localhost:9001/pizzas");
 xhr.setRequestHeader("Content-Type", "application/json");
 
 xhr.onerror = function () {

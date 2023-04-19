@@ -1,7 +1,7 @@
 {
-  "name": "myapp",
+  "name": "server",
   "version": "1.0.0",
-  "description": "My Node.js application",
+  "description": "My server",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"

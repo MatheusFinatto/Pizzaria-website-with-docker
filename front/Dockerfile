@@ -1,11 +1,8 @@
-FROM node:14
+# Imagem base do httpd
+FROM httpd:latest
 
-WORKDIR /front
+# Copia os arquivos da aplicação para a pasta padrão do httpd
+COPY . /usr/local/apache2/htdocs/
 
-COPY ./front/package.json ./
-
-RUN npm install
-
-COPY . .
-
-CMD [ "npm", "start" ]
+# Expor a porta 80 para acesso externo
+EXPOSE 80
