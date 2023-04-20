@@ -9,6 +9,8 @@ services:
       - "8080:80"
     volumes:
       - ./front:/usr/local/apache2/htdocs/
+    depends_on:
+      - server
 
 
   server:
@@ -24,18 +26,20 @@ services:
 
       
   db:
-      image: mysql
-      container_name: db
-      environment:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: mydb
-          MYSQL_USER: user
-          MYSQL_PASSWORD: pass
-      ports:
-        - 3306:3306
-      volumes:
-        - ./db:/var/lib/mysql
-      healthcheck:
-          test: ["CMD", "mysqladmin", "--silent", "ping", "-h", "localhost"]
-          interval: 10s
-          retries: 5
+    image: mysql
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pizzaria
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    ports:
+      - 3307:3306
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    command: --init-file /docker-entrypoint-initdb.d/pizzaria.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "--silent", "ping", "-h", "127.0.0.1"]
+      interval: 10s
+      retries: 5
