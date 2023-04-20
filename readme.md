@@ -2,6 +2,7 @@ Como executar:
 
 - tenha docker instalado
 - execute o comando `docker compose up` em um terminal dentro da pasta
+PS: o tempo de inicio pode variar de acordo com uma série de fatores (de 15 segundos até 1 minuto, aproximadamente).
 
 Se tudo está correto, em http://127.0.0.1:5500/menu.html aparecerá um menu de pizzas baseado em ./server/db.json
 
