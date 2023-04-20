@@ -1,7 +1,9 @@
 Como executar:
 
 - tenha docker instalado
-- execute o comando `docker compose up` em um terminal dentro da pasta
+- clone o repositório
+- navegue até a pasta do repositorio clonado pela linha de comando
+- execute o comando `docker compose up` no terminal
 
 OBS: o tempo de inicio pode variar de acordo com uma série de fatores (de 15 segundos até 1 minuto, aproximadamente).
 <br>
