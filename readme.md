@@ -1,7 +1,9 @@
 
 # Docker Pizza App
 
-Welcome to Docker Pizza App, a full-stack web application that allows you to order pizzas online. It is built using Docker containers to hold both front-end (Apache), server-side (Node.js), and database (MySQL) components.
+Welcome to Docker Pizza App, a full-stack web application for a fictional pizza shop, that includes their history and menu. 
+
+It is built using Docker containers to hold both front-end (Apache), server-side (Node.js), and database (MySQL) components.
 
 ## How to Run the App
 
